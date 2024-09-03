@@ -71,6 +71,9 @@
       "assets": [
         "../assets"
       ],
+      "assets/*": [
+        "../assets/*"
+      ],
       "public": [
         "../public"
       ],
@@ -93,7 +96,7 @@
         "./imports"
       ],
       "#app-manifest": [
-        "./manifest/meta/97d540fc-4c22-4dd2-9d1b-4ffd3acb9b39.json"
+        "./manifest/meta/dev"
       ],
       "#build": [
         "."
@@ -137,6 +140,8 @@
     "./nuxt.d.ts",
     "../.config/nuxt.*",
     "../**/*",
+    "../node_modules/.pnpm/@nuxtjs+tailwindcss@6.12.1_magicast@0.3.5_rollup@4.21.2/node_modules/@nuxtjs/tailwindcss/runtime",
+    "../node_modules/.pnpm/@nuxtjs+tailwindcss@6.12.1_magicast@0.3.5_rollup@4.21.2/node_modules/@nuxtjs/tailwindcss/dist/runtime",
     "../node_modules/.pnpm/@nuxt+devtools@1.4.1_rollup@4.21.2_vite@5.4.2_@types+node@22.5.2_terser@5.31.6_/node_modules/@nuxt/devtools/runtime",
     "../node_modules/.pnpm/@nuxt+devtools@1.4.1_rollup@4.21.2_vite@5.4.2_@types+node@22.5.2_terser@5.31.6_/node_modules/@nuxt/devtools/dist/runtime",
     "../node_modules/.pnpm/@nuxt+telemetry@2.5.4_magicast@0.3.5_rollup@4.21.2/node_modules/@nuxt/telemetry/runtime",
@@ -147,6 +152,8 @@
     "../dist",
     "../node_modules",
     "../node_modules/.pnpm/nuxt@3.13.0_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_53zdip4ec53wrlbiawuczs7x7u/node_modules/nuxt/node_modules",
+    "../node_modules/.pnpm/@nuxtjs+tailwindcss@6.12.1_magicast@0.3.5_rollup@4.21.2/node_modules/@nuxtjs/tailwindcss/runtime/server",
+    "../node_modules/.pnpm/@nuxtjs+tailwindcss@6.12.1_magicast@0.3.5_rollup@4.21.2/node_modules/@nuxtjs/tailwindcss/dist/runtime/server",
     "../node_modules/.pnpm/@nuxt+devtools@1.4.1_rollup@4.21.2_vite@5.4.2_@types+node@22.5.2_terser@5.31.6_/node_modules/@nuxt/devtools/runtime/server",
     "../node_modules/.pnpm/@nuxt+devtools@1.4.1_rollup@4.21.2_vite@5.4.2_@types+node@22.5.2_terser@5.31.6_/node_modules/@nuxt/devtools/dist/runtime/server",
     "../node_modules/.pnpm/@nuxt+telemetry@2.5.4_magicast@0.3.5_rollup@4.21.2/node_modules/@nuxt/telemetry/runtime/server",
