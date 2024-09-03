@@ -3,5 +3,44 @@
 @tailwind utilities;
 
 :root {
-  --bg: #191919;
+  --grey: #e3e1df;
+  --grey-dark: #888786;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Jetbrains Mono;
+  font-smooth: antialising;
+  color: black;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 44px;
+  font-weight: 800;
+}
+
+p {
+  letter-spacing: -0.45px;
+}
+
+@font-face {
+  font-family: "Jetbrains Mono";
+  src: url("public/fonts/JetBrainsMono-SemiBold.ttf");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Jetbrains Mono";
+  src: url("public/fonts/JetBrainsMono-Bold.ttf");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
 }

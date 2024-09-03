@@ -12,7 +12,16 @@ export default defineNuxtConfig({
   css: ["~/assets/css/global.css", "~/assets/css/tailwind.css"],
 
   runtimeConfig: {
-    public: {},
+    public: {
+      baseURL: process.env.BASE_URL,
+      clientId: process.env.SPOTIFY_CLIENT_ID,
+      clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
+      redirectURL: process.env.SPOTIFY_REDIRECT_URI,
+    },
+  },
+
+  devServer: {
+    port: 3000,
   },
 
   app: {
@@ -24,7 +33,6 @@ export default defineNuxtConfig({
           href: "/images/favicon.svg",
         },
       ],
-      script: [],
     },
   },
 });

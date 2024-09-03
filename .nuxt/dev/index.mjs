@@ -8,7 +8,7 @@ import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRender
 import { stringify, uneval } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/devalue@5.0.0/node_modules/devalue/index.js';
 import destr from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/destr@2.0.3/node_modules/destr/dist/index.mjs';
 import { parseURL, withoutBase, joinURL, getQuery, withQuery, withTrailingSlash, joinRelativeURL } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/ufo@1.5.4/node_modules/ufo/dist/index.mjs';
-import { renderToString } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/vue@3.4.38/node_modules/vue/server-renderer/index.mjs';
+import { renderToString } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue/server-renderer/index.mjs';
 import { propsToString, renderSSRHead } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/@unhead+ssr@1.10.4/node_modules/@unhead/ssr/dist/index.mjs';
 import { createFetch as createFetch$1, Headers as Headers$1 } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/ofetch@1.3.4/node_modules/ofetch/dist/node.mjs';
 import { createCall, createFetch } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/unenv@1.10.0/node_modules/unenv/runtime/fetch/index.mjs';
@@ -24,7 +24,7 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 import { consola } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/consola@3.2.3/node_modules/consola/dist/index.mjs';
 import { getContext } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/unctx@2.3.1/node_modules/unctx/dist/index.mjs';
 import { captureRawStackTrace, parseRawStackTrace } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/errx@0.1.0/node_modules/errx/dist/index.js';
-import { isVNode, version, unref } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/vue@3.4.38/node_modules/vue/index.mjs';
+import { isVNode, version, unref } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue/index.mjs';
 import { createServerHead as createServerHead$1, CapoPlugin } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/unhead@1.10.4/node_modules/unhead/dist/index.mjs';
 import { defineHeadPlugin } from 'file:///Users/7ofunm1/Desktop/Vue/muse/node_modules/.pnpm/@unhead+shared@1.10.4/node_modules/@unhead/shared/dist/index.mjs';
 
@@ -101,7 +101,12 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {}
+  "public": {
+    "baseURL": "https://api.spotify.com",
+    "clientId": "7d1476c5a7d4470787aef4e44db5d04a",
+    "clientSecret": "f77109f55cc64914a257c12f27b58d95",
+    "redirectURL": "http://localhost:3000/callback"
+  }
 };
 const envOptions = {
   prefix: "NITRO_",
@@ -638,7 +643,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _WfmTKO6PGI = (nitroApp) => {
+const _lJOzbWLGEH = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -708,7 +713,7 @@ function onConsoleLog(callback) {
 
 const plugins = [
   _OggME9yIeO,
-_WfmTKO6PGI
+_lJOzbWLGEH
 ];
 
 const scheduledTasks = false;
@@ -839,11 +844,11 @@ const errorHandler = (async function errorhandler(error, event) {
   return send(event, html);
 });
 
-const _lazy_FE67K7 = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_rWVGco = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '/__nuxt_error', handler: _lazy_FE67K7, lazy: true, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_FE67K7, lazy: true, middleware: false, method: undefined }
+  { route: '/__nuxt_error', handler: _lazy_rWVGco, lazy: true, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_rWVGco, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {

@@ -1,27 +1,13 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  font-family: Jetbrains Mono;
-  font-smooth: antialising;
-  color: rgba(25, 25, 25, 1);
-}
-
-@font-face {
-  font-family: "Jetbrains Mono";
-  src: url("~/public/fonts/JetBrainsMono-SemiBold.tff");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
+.page {
+  @apply w-screen h-screen;
+  padding: 72px;
 }
 
 .btn {
   background-color: black;
   color: white;
-  border-radius: 12px;
-  padding: 8px 16px;
+  border-radius: 50vw;
+  padding: 12px 24px;
   transition: all 300ms ease;
 }
 

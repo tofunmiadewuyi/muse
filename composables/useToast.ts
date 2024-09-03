@@ -3,11 +3,7 @@ import { toast } from "vue-sonner";
 //TODO: remove action toast
 type ActionToast = { label: string; onClick: () => void };
 
-export const useToast = (
-  message: string,
-  type?: string,
-  action?: ActionToast
-) => {
+export function useToast(message: string, type?: string, action?: ActionToast) {
   const { label, onClick } = action || {};
   switch (type) {
     case "success":
@@ -24,4 +20,4 @@ export const useToast = (
     default:
       return toast(message);
   }
-};
+}
