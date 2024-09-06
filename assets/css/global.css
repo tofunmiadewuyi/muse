@@ -17,7 +17,7 @@
 }
 
 .heading-box {
-  @apply flex w-full max-w-64;
+  @apply flex w-full;
 }
 
 .heading-box:first-child {
@@ -28,4 +28,9 @@
 }
 .heading-box:last-child {
   @apply justify-end;
+}
+
+.icon-bounce {
+  @apply text-[120px] hover:scale-110;
+  transition: all 2s var(--elastic-out);
 }

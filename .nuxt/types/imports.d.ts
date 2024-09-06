@@ -31,6 +31,7 @@ declare global {
   const getAppManifest: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']
   const getCurrentInstance: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['getCurrentInstance']
   const getCurrentScope: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['getCurrentScope']
+  const getFreshToken: typeof import('../../composables/useAuth')['getFreshToken']
   const getRouteRules: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/manifest')['getRouteRules']
   const h: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['h']
   const hasInjectionContext: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['hasInjectionContext']
@@ -518,6 +519,7 @@ declare module 'vue' {
     readonly getAppManifest: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']>
     readonly getCurrentInstance: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['getCurrentScope']>
+    readonly getFreshToken: UnwrapRef<typeof import('../../composables/useAuth')['getFreshToken']>
     readonly getRouteRules: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/manifest')['getRouteRules']>
     readonly h: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['h']>
     readonly hasInjectionContext: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['hasInjectionContext']>

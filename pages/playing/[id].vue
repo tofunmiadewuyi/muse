@@ -1,12 +1,19 @@
 <template>
-  <div class="page flex justify-center items-center">
-    <Playing
+  <div class="page flex justify-center items-center relative">
+    <!-- <Playing
       v-if="isReady"
       :deviceReady="deviceReady"
       :playerInstance="playerInstance!"
       :trackPlaying="track"
       :playbackState="playbackState"
-    />
+    /> -->
+    <ShimmersPlaying :deviceReady="false" />
+    <div class="absolute bottom-10 right-10">
+      <PlayingAlbum />
+    </div>
+    <div class="absolute bottom-10 left-10">
+      <PlayingQueue />
+    </div>
   </div>
 </template>
 
@@ -30,8 +37,8 @@ const playbackState = ref();
 
 const isReady = ref(false);
 
-console.log("playerInst:", playerInstance);
-console.log("deviceReady", deviceReady);
+console.log("trackDetails:", track);
+console.log("currentTrack:", currentTrack);
 
 watch([playerInstance, deviceReady], async ([player, ready]) => {
   if (player && ready) {
@@ -46,15 +53,6 @@ watch([playerInstance, deviceReady], async ([player, ready]) => {
     }
   }
 });
-
-// if (playerInstance.value && deviceReady.value) {
-//       await playTrack([track.uri]);
-//       playbackState.value = await getPlaybackState();
-//       console.log("pb state:", playbackState.value);
-//     }
-
-console.log("track details:", track);
-console.log("currentTrack", currentTrack);
 
 definePageMeta({
   layout: "loggedin",

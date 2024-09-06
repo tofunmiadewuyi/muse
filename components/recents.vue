@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="card" @click="() => navigateTo('/recents')">
     <div v-if="data" class="container">
       <NuxtLink
         v-for="(recent, index) in data"
@@ -41,6 +41,10 @@ onMounted(() => {
 </script>
 
 <style scoped lang="css">
+.card {
+  @apply flex flex-col gap-8 hover:scale-110 cursor-pointer;
+  transition: transform 500ms var(--power2-out);
+}
 .container {
   --container: 320px;
   width: var(--container);
@@ -54,7 +58,7 @@ onMounted(() => {
   text-align: center;
   background-color: var(--grey);
   /* overflow: hidden; */
-  transition: transform 300ms ease;
+  /* transition: transform 500ms var(--elastic-out); */
   perspective: 800px;
   padding: calc(var(--container) / 10);
   font-size: 16px;
@@ -67,7 +71,8 @@ onMounted(() => {
   background-color: black;
   flex-shrink: 0;
   position: absolute;
-  transition: all 300ms ease;
+  /* transition: all 300ms ease; */
+  transition: all 600ms var(--back-out);
   border-radius: calc(var(--container) / 20);
   transform: rotate3d(0, 1, 0, 30deg);
   overflow: hidden;

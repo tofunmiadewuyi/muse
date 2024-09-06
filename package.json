@@ -10,10 +10,11 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "defu": "^6.1.4",
     "gsap": "^3.12.5",
     "lodash": "^4.17.21",
-    "remixicon": "^4.3.0",
     "nuxt": "^3.13.0",
+    "remixicon": "^4.3.0",
     "vue": "latest",
     "vue-sonner": "^1.1.5"
   },

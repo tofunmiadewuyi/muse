@@ -1,38 +1,26 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <NuxtLink class="card" to="/playlists">
     <div class="container">
-      <NuxtLink
-        to="/playlists"
-        class="text-[120px] hover:scale-110 transition-transform duration-150 ease-in"
-      >
+      <div class="icon-bounce">
         <i class="ri-play-list-fill"></i>
-      </NuxtLink>
-      <Modal
-        :isOpen="isModalOpen"
-        @close="() => (isModalOpen = false)"
-        title="Test Modal"
-      >
-        <div>This is my modal content</div>
-      </Modal>
+      </div>
+
       <div class="flex flex-col gap-2">
         <p>Playlists</p>
-        <p class="text-[var(--grey-dark)]">Create & Manage</p>
+        <p class="text-[var(--grey-dark)]">Create, Listen, Manage</p>
       </div>
-      <button
-        @click="() => (isModalOpen = true)"
-        class="p-2 h-9 w-9 rounded-[12px] bg-black/15 absolute top-6 right-6"
-      >
-        <i class="ri-add-line text-[20px] leading-[20px]"></i>
-      </button>
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
-<script setup lang="ts">
-const isModalOpen = ref(false);
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="css">
+.card {
+  @apply flex flex-col gap-8 hover:scale-110 cursor-pointer;
+  transition: transform 500ms var(--power2-out);
+}
+
 .container {
   --container: 320px;
   width: var(--container);
@@ -46,7 +34,6 @@ const isModalOpen = ref(false);
   justify-content: end;
   align-items: center;
   text-align: center;
-  /* overflow: hidden; */
   transition: transform 300ms ease;
   perspective: 800px;
   padding: calc(var(--container) / 10);

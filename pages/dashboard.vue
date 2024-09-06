@@ -1,6 +1,6 @@
 <template>
   <div class="page flex justify-center flex-col items-center">
-    <h1 class="text-[32px] leading-8 mt-16 mb-10">
+    <h1 class="text-[32px] leading-8 mt-16 mb-20">
       Welcome to your dashboard, {{ user.display_name }}
     </h1>
     <!-- <Playing /> -->

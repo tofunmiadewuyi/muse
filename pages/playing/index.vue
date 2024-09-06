@@ -1,6 +1,6 @@
 <template>
   <div class="page flex justify-center items-center">
-    <Playing />
+    <!-- <Playing /> -->
   </div>
 </template>
 

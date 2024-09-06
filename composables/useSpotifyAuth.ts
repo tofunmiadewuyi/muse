@@ -26,29 +26,6 @@ export const useSpotifyAuth = () => {
   const expiresToken: CookieRef<Token["expires_in"]> = useCookie("tokenExpire");
   const route = useRoute();
 
-  const base64urlencode = (a: any) => {
-    const uint8Array = new Uint8Array(a);
-    const byteArray = Array.from(uint8Array);
-    return btoa(String.fromCharCode.apply(null, byteArray))
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/, "");
-  };
-
-  const generateCodeVerifier = () => {
-    const array = new Uint32Array(56 / 2);
-    window.crypto.getRandomValues(array);
-    return Array.from(array, (dec) => ("0" + dec.toString(16)).substr(-2)).join(
-      ""
-    );
-  };
-
-  const sha256 = async (plain: any) => {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(plain);
-    return window.crypto.subtle.digest("SHA-256", data);
-  };
-
   const login = async () => {
     const codeVerifier = generateCodeVerifier();
     const hashed = await sha256(codeVerifier);
@@ -123,4 +100,27 @@ export const useSpotifyAuth = () => {
     getUser,
     handleCallback,
   };
+};
+
+const base64urlencode = (a: any) => {
+  const uint8Array = new Uint8Array(a);
+  const byteArray = Array.from(uint8Array);
+  return btoa(String.fromCharCode.apply(null, byteArray))
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
+};
+
+const generateCodeVerifier = () => {
+  const array = new Uint32Array(56 / 2);
+  window.crypto.getRandomValues(array);
+  return Array.from(array, (dec) => ("0" + dec.toString(16)).substr(-2)).join(
+    ""
+  );
+};
+
+const sha256 = async (plain: any) => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(plain);
+  return window.crypto.subtle.digest("SHA-256", data);
 };

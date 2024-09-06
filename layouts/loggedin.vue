@@ -2,6 +2,7 @@
   <div>
     <Topbar />
     <div class="slot-container"><slot /></div>
+    <Sidenav />
   </div>
 </template>
 

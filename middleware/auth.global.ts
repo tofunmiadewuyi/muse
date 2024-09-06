@@ -1,13 +1,21 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  const cookie = useCookie("accessToken");
+  const accessToken = useCookie("accessToken");
+  const expires = useCookie<number>("tokenExpire");
 
-  if (cookie.value) {
+  const tokenExpired = (expiresAt: number): boolean => {
+    return Date.now() > expiresAt - 300000; // if it expires in the next 5mins
+  };
+
+  if (accessToken.value) {
+    if (tokenExpired(expires.value)) {
+      await getFreshToken();
+    }
     if (to.path === "/") return navigateTo("/dashboard");
     return;
   } else {
     if (to.path === "/callback" || to.path === "/logout") return;
-    cookie.value = null;
-    if (to.path !== "/") return navigateTo("/");
+
+    if (to.path !== "/") logOut();
     return;
   }
 });

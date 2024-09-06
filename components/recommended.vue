@@ -1,18 +1,18 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <NuxtLink class="card" to="/recommended">
     <div class="container">
-      <div class="text-[120px]">
+      <div class="icon-bounce">
         <i class="ri-play-circle-fill"></i>
       </div>
       <div class="flex flex-col gap-2">
         <p>Recommended</p>
         <p class="text-[var(--grey-dark)]">Based on your history</p>
       </div>
-      <i
+      <!-- <i
         class="ri-medal-fill text-[56px] leading-[56px] text-[var(--grey-dark)] absolute top-0 right-8"
-      ></i>
+      ></i> -->
     </div>
-  </div>
+  </NuxtLink>
 </template>
 
 <script setup lang="ts">
@@ -26,6 +26,11 @@ console.log("recommended:", recommends);
 </script>
 
 <style scoped lang="css">
+.card {
+  @apply flex flex-col gap-8 hover:scale-110;
+  transition: transform 500ms var(--power2-out);
+}
+
 .container {
   --container: 320px;
   width: var(--container);
