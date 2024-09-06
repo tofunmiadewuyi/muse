@@ -4,10 +4,11 @@
 
 <script setup>
 const router = useRouter();
-const { handleCallback } = useSpotifyAuth();
+const { handleCallback, getUser } = useSpotifyAuth();
 
 onMounted(async () => {
-  await handleCallback();
+  const res = await handleCallback();
+  if (res) await getUser();
   router.push("/");
 });
 </script>

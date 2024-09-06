@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     if (to.path === "/") return navigateTo("/dashboard");
     return;
   } else {
-    if (to.path === "/callback") return;
+    if (to.path === "/callback" || to.path === "/logout") return;
     cookie.value = null;
     if (to.path !== "/") return navigateTo("/");
     return;

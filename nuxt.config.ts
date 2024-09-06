@@ -5,9 +5,9 @@ export default defineNuxtConfig({
 
   pages: true,
 
-  ssr: true,
+  // ssr: true,
 
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "nuxt-lodash"],
 
   css: ["~/assets/css/global.css", "~/assets/css/tailwind.css"],
 

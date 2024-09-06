@@ -1,5 +1,5 @@
 .page {
-  @apply w-screen h-screen;
+  @apply w-screen min-h-screen;
   padding: 72px;
 }
 
@@ -14,4 +14,18 @@
 .btn:hover {
   scale: 1.03;
   background-color: rgb(0 0 0 / 0.9);
+}
+
+.heading-box {
+  @apply flex w-full max-w-64;
+}
+
+.heading-box:first-child {
+  @apply justify-start;
+}
+.heading-box:nth-child(2) {
+  @apply justify-center max-w-none;
+}
+.heading-box:last-child {
+  @apply justify-end;
 }

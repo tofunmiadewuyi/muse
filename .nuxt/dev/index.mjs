@@ -618,7 +618,7 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _OggME9yIeO = (function(nitro) {
+const _vm2IXbq8xi = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
@@ -643,7 +643,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _lJOzbWLGEH = (nitroApp) => {
+const _M4kzDjXm66 = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -694,7 +694,8 @@ const _lJOzbWLGEH = (nitroApp) => {
       return;
     }
     try {
-      htmlContext.bodyAppend.unshift(`<script type="application/json" data-nuxt-logs="${appId}">${stringify(ctx.logs, { ...devReducers, ...ctx.event.context._payloadReducers })}<\/script>`);
+      const reducers = Object.assign(/* @__PURE__ */ Object.create(null), devReducers, ctx.event.context._payloadReducers);
+      htmlContext.bodyAppend.unshift(`<script type="application/json" data-nuxt-logs="${appId}">${stringify(ctx.logs, reducers)}<\/script>`);
     } catch (e) {
       const shortError = e instanceof Error && "toString" in e ? ` Received \`${e.toString()}\`.` : "";
       console.warn(`[nuxt] Failed to stringify dev server logs.${shortError} You can define your own reducer/reviver for rich types following the instructions in https://nuxt.com/docs/api/composables/use-nuxt-app#payload.`);
@@ -712,8 +713,8 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _OggME9yIeO,
-_lJOzbWLGEH
+  _vm2IXbq8xi,
+_M4kzDjXm66
 ];
 
 const scheduledTasks = false;
@@ -844,11 +845,11 @@ const errorHandler = (async function errorhandler(error, event) {
   return send(event, html);
 });
 
-const _lazy_rWVGco = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_fi1rij = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '/__nuxt_error', handler: _lazy_rWVGco, lazy: true, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_rWVGco, lazy: true, middleware: false, method: undefined }
+  { route: '/__nuxt_error', handler: _lazy_fi1rij, lazy: true, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_fi1rij, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -1239,7 +1240,7 @@ const renderer = defineRenderHandler(async (event) => {
     nuxt: void 0,
     /* NuxtApp */
     payload: ssrError ? { error: ssrError } : {},
-    _payloadReducers: {},
+    _payloadReducers: /* @__PURE__ */ Object.create(null),
     modules: /* @__PURE__ */ new Set(),
     islandContext
   };

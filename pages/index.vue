@@ -13,36 +13,7 @@ const toast = () => {
   useToast("Testing toast");
 };
 
-const baseURL = useRuntimeConfig().public.baseURL;
-
-const route = useRoute();
-const router = useRouter();
-
-const cookie = useCookie("accessToken");
 const { login } = useSpotifyAuth();
-
-const trackId = ref("");
-const trackData = ref(null);
-
-const getTrack = async () => {
-  if (!cookie.value || !trackId.value) {
-    console.log("still no accessToken");
-    return;
-  }
-
-  const { data, error } = await useFetch(
-    `${baseURL}/v1/tracks/${trackId.value}`,
-    {
-      headers: { Authorization: `Bearer ${cookie.value}` },
-    }
-  );
-
-  if (error.value) {
-    console.error("Error fetching track:", error.value);
-  } else {
-    trackData.value = data.value;
-  }
-};
 </script>
 
 <style scoped lang="css"></style>

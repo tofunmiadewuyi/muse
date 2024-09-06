@@ -11,13 +11,16 @@
   },
   "dependencies": {
     "gsap": "^3.12.5",
-    "nuxt": "^3.13.0",
+    "lodash": "^4.17.21",
     "remixicon": "^4.3.0",
+    "nuxt": "^3.13.0",
     "vue": "latest",
     "vue-sonner": "^1.1.5"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
+    "@types/lodash": "^4.17.7",
+    "nuxt-lodash": "^2.5.3",
     "typescript": "5.4.3"
   }
 }

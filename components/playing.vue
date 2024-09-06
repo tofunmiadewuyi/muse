@@ -1,11 +1,15 @@
 <template>
-  <div class="flex flex-col gap-8">
-    <div class="container">
+  <div class="flex items-center flex-col gap-8">
+    <div class="container" :class="{ playing: isPlaying }">
       <div
-        class="disc"
-        :class="{ spin: isPlaying }"
+        class="disc spin"
+        :class="`${isPlaying ? 'playing' : 'paused'} ${
+          !trackPlaying && 'animate-pulse'
+        }`"
         :style="{
-          backgroundImage: 'url(/lob.png)',
+          backgroundImage: `${
+            trackPlaying ? `url(${trackPlaying.album.images[0].url})` : ''
+          }`,
           transform: `rotate(${0}deg)`,
         }"
       >
@@ -18,15 +22,15 @@
         </div>
       </div>
 
-      <div class="details flex flex-col gap-2">
+      <div v-show="isPlaying" class="details flex flex-col gap-2">
         <i class="ri-voiceprint-line text opacity-40 text-[20px]"></i>
-        <div class="song-details">
-          <p>Title</p>
-          <p class="opacity-40">Artist</p>
+        <div v-if="trackPlaying" class="song-details">
+          <p>{{ trackPlaying.name }}</p>
+          <p class="opacity-40">{{ artists }}</p>
         </div>
         <div class="timer">
-          <p>1:07</p>
-          <p>/ 2:56</p>
+          <p>{{ convertTimeToReadable(position) }}</p>
+          <p>/ {{ convertTimeToReadable(trackPlaying.duration_ms) }}</p>
         </div>
       </div>
     </div>
@@ -34,20 +38,44 @@
     <div class="w-full relative">
       <div class="track" ref="track" />
       <div class="progress" :style="{ width: `${progress}%` }" />
-      <div class="knob" id="knob"></div>
+      <div class="knob" id="knob" :style="{ marginLeft: `${progress}%` }"></div>
     </div>
 
-    <div class="controls">
+    <div
+      class="controls"
+      :class="`${deviceReady ? '' : 'pointer-events-none opacity-55'}`"
+    >
       <button class="control-btn"><i class="ri-shuffle-fill"></i></button>
-      <button class="control-btn"><i class="ri-skip-left-fill"></i></button>
+      <button @click="playPrev" class="control-btn">
+        <i class="ri-skip-left-fill"></i>
+      </button>
       <button v-if="isPlaying" @click="togglePlay" class="control-btn">
         <i class="ri-pause-circle-fill"></i>
       </button>
-      <button v-if="!isPlaying" @click="togglePlay" class="control-btn">
+      <button
+        v-if="!isPlaying"
+        @click="togglePlay"
+        :disabled="!deviceReady"
+        class="control-btn"
+      >
         <i class="ri-play-circle-fill"></i>
       </button>
-      <button class="control-btn"><i class="ri-skip-right-fill"></i></button>
+      <button @click="playNext" class="control-btn">
+        <i class="ri-skip-right-fill"></i>
+      </button>
       <button class="control-btn"><i class="ri-repeat-2-fill"></i></button>
+    </div>
+    <div
+      class="tag flex items-center gap-2 max-w-max px-4 py-2 rounded-full"
+      :class="`${deviceReady ? 'bg-green-500/15' : 'bg-yellow-500/15'}`"
+    >
+      <div
+        v-if="deviceReady"
+        class="h-2 w-2 rounded-full bg-green-500 animate-pulse"
+      />
+      <div v-else class="h-2 w-2 rounded-full bg-yellow-500 animate-pulse" />
+      <p v-if="deviceReady" class="text-[12px]">Connected</p>
+      <p v-else class="text-[12px] text-[var(--grey-dark)]">Connecting...</p>
     </div>
   </div>
 </template>
@@ -56,28 +84,82 @@
 import { gsap } from "gsap";
 
 import { Draggable } from "gsap/Draggable";
+import type { PlaybackState, SpotifyPlayer, Track } from "~/types/assets";
 
 gsap.registerPlugin(Draggable);
+
+const { playerInstance, deviceReady, trackPlaying, playbackState } =
+  defineProps<{
+    playerInstance: SpotifyPlayer;
+    deviceReady: boolean;
+    trackPlaying: Track;
+    playbackState: PlaybackState;
+  }>();
+
+const artists = computed(() => {
+  if (!trackPlaying) return null;
+  return trackPlaying.artists
+    .map((artist: { uri: string; name: string }) => artist.name)
+    .join(", ");
+});
 
 const track = ref<HTMLDivElement | null>(null);
 
 let trackWidth = 0;
+let progressInterval: NodeJS.Timeout;
 
-const progress = ref(0);
+const progress = ref(
+  (playbackState.progress_ms / trackPlaying.duration_ms) * 100
+);
 
-const isPlaying = ref(false);
-
+const position = ref(playbackState.progress_ms);
 const dragValue = ref(0);
+
+console.log("isplaying:", playbackState.is_playing);
+const isPlaying = ref(playbackState.is_playing);
+
+const convertTimeToReadable = (ms: number) => {
+  const totalSeconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+};
 
 const togglePlay = () => {
   isPlaying.value = !isPlaying.value;
+  playerInstance.togglePlay();
   if (isPlaying) {
   }
 };
 
-onMounted(() => {
-  trackWidth.value = track.value.offsetWidth;
-  Draggable.create("#knob", {
+const playNext = () => {
+  playerInstance.nextTrack().then(() => {});
+};
+
+const playPrev = () => {
+  playerInstance.previousTrack().then(() => {});
+};
+
+const seek = (pos: number) => {
+  playerInstance.seek(pos * 1000).then(() => {
+    console.log("Changed position!");
+  });
+};
+
+onMounted(async () => {
+  trackWidth = track.value!.offsetWidth;
+
+  progressInterval = setInterval(async () => {
+    if (playerInstance) {
+      const state = await playerInstance.getCurrentState();
+      if (state) {
+        position.value = state.position;
+        progress.value = (state.position / state.duration) * 100;
+      }
+    }
+  }, 1000);
+
+  Draggable.create("#no-knob", {
     type: "x",
     bounds: track.value,
     onClick: function () {
@@ -89,9 +171,16 @@ onMounted(() => {
     onDragEnd: function (event) {
       console.log("dragging stopped");
       dragValue.value = this.x;
-      progress.value = (this.x / trackWidth.value) * 100;
+      progress.value = (this.x / trackWidth) * 100;
     },
   });
+});
+
+onUnmounted(() => {
+  if (playerInstance) {
+    playerInstance.disconnect();
+  }
+  clearInterval(progressInterval);
 });
 </script>
 
@@ -104,19 +193,27 @@ onMounted(() => {
   position: relative;
   box-shadow: inset 0px 0px 0px 0.5px rgba(0, 0, 0, 10%);
   display: flex;
-  padding: 28px;
   justify-content: center;
   align-items: end;
   text-align: center;
   overflow: hidden;
+  transition: transform 300ms ease;
+}
+
+.container.playing {
+  padding: 28px;
+}
+
+.details {
+  animation: slideIn 200ms ease;
 }
 
 .song-details {
-  @apply flex flex-col gap-1;
+  @apply flex flex-col gap-1 items-center;
 }
 
 .timer {
-  @apply flex gap-1;
+  @apply flex gap-1 justify-center;
 }
 
 .disc,
@@ -128,20 +225,31 @@ onMounted(() => {
   border-radius: 50vw;
 }
 .disc {
-  position: absolute;
-  top: -50%;
   --disc-size: 320px;
   --disc-center: 96px;
   width: var(--disc-size);
   height: var(--disc-size);
-  background-color: blue;
+  background-color: rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
   padding: calc((var(--disc-size) - var(--disc-center)) / 2);
   background-size: cover;
+  position: absolute;
+  top: 0%;
+  transition: all 300ms ease;
 }
 
 .spin {
   animation: spin 12s linear infinite;
+}
+
+.spin.paused {
+  animation-play-state: paused;
+  scale: 0.8;
+}
+
+.spin.playing {
+  animation-play-state: running;
+  top: -50%;
 }
 
 .disc-center {
@@ -151,6 +259,19 @@ onMounted(() => {
   backdrop-filter: blur(8px);
   padding: calc(var(--disc-size) / 40);
   mix-blend-mode: overlay;
+  position: relative;
+}
+
+.disc_center::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background-color: var(--grey);
+  border-radius: 50vw;
+  width: calc(var(--disc-center) / 2.2857142857);
+  height: calc(var(--disc-center) / 2.2857142857);
 }
 
 .disc-band-outer,
@@ -187,6 +308,11 @@ onMounted(() => {
   box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 8%);
 }
 
+.knob,
+.progress {
+  transition: width 50ms linear;
+}
+
 .track {
   background-color: var(--grey);
   height: 2px;
@@ -215,9 +341,25 @@ onMounted(() => {
   font-size: 56px;
 }
 
+.control-btn {
+  @apply hover:scale-110 active:scale-95;
+  transition: all 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(5%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0%);
+    opacity: 1;
   }
 }
 </style>
