@@ -1,14 +1,5 @@
 <template>
   <div class="side-nav">
-    <div class="w-ful">
-      <input
-        type="text"
-        v-model="search"
-        placeholder="Search Spotify"
-        class="search-input"
-      />
-    </div>
-
     <div class="grid grid-cols-1 gap-2 mt-5">
       <NuxtLink class="page-tab" :class="{ 'active-page': nowPlaying }">
         <i class="ri-play-circle-fill text-[20px] leading-[20px]"></i>
@@ -39,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-const search = ref<string>();
 const route = useRoute();
 
 const nowPlaying = computed(() => {
@@ -66,9 +56,5 @@ const nowPlaying = computed(() => {
 
 .active-page {
   @apply bg-black text-white;
-}
-
-.search-input {
-  @apply bg-[var(--grey)] rounded-[16px] py-2 px-3 w-full;
 }
 </style>

@@ -5,6 +5,9 @@
     <NuxtLink to="/dashboard"
       ><img src="/images/logo.svg" class="" alt="muse logo"
     /></NuxtLink>
+
+    <Search />
+
     <div class="avatar-container" ref="container">
       <button @click="handleClick" class="avatar"><p>TA</p></button>
       <div

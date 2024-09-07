@@ -38,7 +38,7 @@
 import type { Playlist, Track } from "~/types/assets";
 
 definePageMeta({
-  layout: "loggedin",
+  layout: "navigation",
 });
 
 const { getPlaylistById } = useSpotify();

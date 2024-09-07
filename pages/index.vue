@@ -9,10 +9,6 @@
 </template>
 
 <script setup lang="ts">
-const toast = () => {
-  useToast("Testing toast");
-};
-
 const { login } = useSpotifyAuth();
 </script>
 

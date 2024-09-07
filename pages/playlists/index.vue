@@ -55,7 +55,7 @@ const playlists = ref();
 playlists.value = data.items;
 
 definePageMeta({
-  layout: "loggedin",
+  layout: "navigation",
 });
 onMounted(() => {});
 </script>
