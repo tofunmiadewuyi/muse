@@ -37,6 +37,8 @@ async function handle401Error(): Promise<void> {
   }
 }
 
+
+
 export const useFetchExtended = <T>(
   url: string,
   options?: UseFetchOptions<T>

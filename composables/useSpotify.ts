@@ -1,5 +1,3 @@
-import { union } from "lodash";
-
 import type {
   Playlist,
   RecentlyPlayed,
@@ -106,7 +104,7 @@ export const useSpotify = () => {
     const params: Record<string, string | number | undefined> = {
       seed_artists: seedArtists, //ex. 4NHQUGzhtTLFvgF5SZesLK
       seed_genres: seedGenres, //ex. classical, country
-      seed_tracks: union(seedTracks.map((track) => track.id)).join(","), //ex. 0c6xIDDpzE81m2q797ordA
+      seed_tracks: lodashUnion(seedTracks.map((track) => track.id)).join(","), //ex. 0c6xIDDpzE81m2q797ordA
       limit: limit,
     };
 

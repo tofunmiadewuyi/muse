@@ -18,7 +18,7 @@ export const logOut = () => {
 };
 
 export const getFreshToken = async () => {
-  const clientId = useRuntimeConfig().public.clientId;
+  const config = useRuntimeConfig();
 
   const accessToken: CookieRef<Token["access_token"]> =
     useCookie("accessToken");
@@ -29,7 +29,7 @@ export const getFreshToken = async () => {
   const body = new URLSearchParams({
     grant_type: "refresh_token",
     refresh_token: refreshToken.value,
-    client_id: clientId,
+    client_id: config.public.clientId,
   });
 
   const data = await $fetch<Token>("https://accounts.spotify.com/api/token", {

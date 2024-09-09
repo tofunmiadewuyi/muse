@@ -7,7 +7,10 @@ export default defineNuxtConfig({
 
   // ssr: true,
 
-  modules: ["@nuxtjs/tailwindcss", "nuxt-lodash"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    ["nuxt-lodash", { prefix: "lodash", prefixSkip: false }],
+  ],
 
   css: ["~/assets/css/global.css", "~/assets/css/tailwind.css"],
 
@@ -19,7 +22,6 @@ export default defineNuxtConfig({
       redirectURL: process.env.SPOTIFY_REDIRECT_URI,
     },
   },
-
   devServer: {
     port: 3000,
   },
