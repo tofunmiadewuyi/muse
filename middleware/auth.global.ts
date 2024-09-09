@@ -10,9 +10,9 @@ export default defineNuxtRouteMiddleware(async (to) => {
   };
 
   if (accessToken.value) {
-    if (tokenExpired(expires.value)) {
-      await getFreshToken();
-    }
+    // if (tokenExpired(expires.value)) {
+    //   await getFreshToken();
+    // }
     if (to.path === "/") return navigateTo("/dashboard");
     return;
   } else {
