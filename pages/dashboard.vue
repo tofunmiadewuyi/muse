@@ -1,9 +1,8 @@
 <template>
-  <div class="page flex justify-center flex-col items-center">
-    <h1 class="text-[32px] leading-8 mt-16 mb-20">
+  <div class="page flex justify-center flex-col items-center px-12 py-20">
+    <h1 class="text-[32px] leading-8 my-8">
       Welcome to your dashboard, {{ user.display_name }}
     </h1>
-    <!-- <Playing /> -->
     <div class="flex flex-wrap justify-center gap-10">
       <Playlists />
       <Recents :data="recents?.items" />
@@ -21,7 +20,18 @@ definePageMeta({
 
 const { getRecentlyPlayed } = useSpotify();
 
-const recents: { items: RecentlyPlayed[] } | null = await getRecentlyPlayed();
+const recentsRes: { items: RecentlyPlayed[] } | null = await getRecentlyPlayed(
+  50
+);
+
+const recents = {
+  items: recentsRes?.items
+    .filter(
+      (value, index, self) =>
+        index === self.findIndex((t) => t.track.id === value.track.id)
+    )
+    .splice(0, 4),
+};
 
 const user = useCookie<SpotifyUser>("user");
 </script>

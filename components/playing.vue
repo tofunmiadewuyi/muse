@@ -1,14 +1,15 @@
 <template>
   <div class="flex items-center flex-col gap-8">
-    <div class="container" :class="{ playing: isPlaying }">
+    <div class="container" :class="{ playing: !isPaused }">
       <div
         class="disc spin"
-        :class="`${isPlaying ? 'playing' : 'paused'} ${
-          !trackPlaying && 'animate-pulse'
+        :class="`${isPaused ? 'paused' : 'playing'} ${
+          isPaused && 'animate-pulse'
         }`"
         :style="{
           backgroundImage: `${
-            trackPlaying ? `url(${trackPlaying.album.images[0].url})` : ''
+            state &&
+            `url(${state.track_window.current_track.album.images[0].url})`
           }`,
           transform: `rotate(${0}deg)`,
         }"
@@ -22,15 +23,18 @@
         </div>
       </div>
 
-      <div v-show="isPlaying" class="details flex flex-col gap-2">
-        <i class="ri-voiceprint-line text opacity-40 text-[20px]"></i>
-        <div v-if="trackPlaying" class="song-details">
-          <p>{{ trackPlaying.name }}</p>
-          <p class="opacity-40">{{ artists }}</p>
+      <div v-show="!isPaused" class="details flex flex-col gap-2">
+        <!-- <i class="ri-voiceprint-line text opacity-40 text-[20px]"></i> -->
+        <div class="flex justify-center">
+          <Wave :playing="!isPaused" />
+        </div>
+        <div v-if="state" class="song-details">
+          <p class="line-clamp-2">{{ currentTrack.name }}</p>
+          <p class="opacity-40 line-clamp-1">{{ artists }}</p>
         </div>
         <div class="timer">
           <p>{{ convertTimeToReadable(position) }}</p>
-          <p>/ {{ convertTimeToReadable(trackPlaying.duration_ms) }}</p>
+          <p>/ {{ convertTimeToReadable(duration) }}</p>
         </div>
       </div>
     </div>
@@ -43,21 +47,16 @@
 
     <div
       class="controls"
-      :class="`${deviceReady ? '' : 'pointer-events-none opacity-55'}`"
+      :class="`${!deviceReady && 'pointer-events-none opacity-55'}`"
     >
       <button class="control-btn"><i class="ri-shuffle-fill"></i></button>
       <button @click="playPrev" class="control-btn">
         <i class="ri-skip-left-fill"></i>
       </button>
-      <button v-if="isPlaying" @click="togglePlay" class="control-btn">
+      <button v-if="!isPaused" @click="togglePlay" class="control-btn">
         <i class="ri-pause-circle-fill"></i>
       </button>
-      <button
-        v-if="!isPlaying"
-        @click="togglePlay"
-        :disabled="!deviceReady"
-        class="control-btn"
-      >
+      <button v-if="isPaused" @click="togglePlay" class="control-btn">
         <i class="ri-play-circle-fill"></i>
       </button>
       <button @click="playNext" class="control-btn">
@@ -65,6 +64,7 @@
       </button>
       <button class="control-btn"><i class="ri-repeat-2-fill"></i></button>
     </div>
+
     <div
       class="tag flex items-center gap-2 max-w-max px-4 py-2 rounded-full"
       :class="`${deviceReady ? 'bg-green-500/15' : 'bg-yellow-500/15'}`"
@@ -84,52 +84,37 @@
 import { gsap } from "gsap";
 
 import { Draggable } from "gsap/Draggable";
-import type { PlaybackState, SpotifyPlayer, Track } from "~/types/assets";
+import type { SpotifyPlayer, PlayerState } from "~/types/assets";
 
 gsap.registerPlugin(Draggable);
 
-const { playerInstance, deviceReady, trackPlaying, playbackState } =
-  defineProps<{
-    playerInstance: SpotifyPlayer;
-    deviceReady: boolean;
-    trackPlaying: Track;
-    playbackState: PlaybackState;
-  }>();
+const { playerInstance, deviceReady, state } = defineProps<{
+  playerInstance: SpotifyPlayer;
+  deviceReady: boolean;
+  state: PlayerState;
+}>();
+
+const currentTrack = ref(state.track_window.current_track);
+const position = ref(state.position);
+const duration = ref(state.duration);
+const isPaused = ref(state.paused);
 
 const artists = computed(() => {
-  if (!trackPlaying) return null;
-  return trackPlaying.artists
+  return currentTrack.value.artists
     .map((artist: { uri: string; name: string }) => artist.name)
     .join(", ");
 });
+
+const progress = computed(() => (position.value / duration.value) * 100);
 
 const track = ref<HTMLDivElement | null>(null);
 
 let trackWidth = 0;
 let progressInterval: NodeJS.Timeout;
 
-const progress = ref(
-  (playbackState.progress_ms / trackPlaying.duration_ms) * 100
-);
-
-const position = ref(playbackState.progress_ms);
-const dragValue = ref(0);
-
-console.log("isplaying:", playbackState.is_playing);
-const isPlaying = ref(playbackState.is_playing);
-
-const convertTimeToReadable = (ms: number) => {
-  const totalSeconds = Math.floor(ms / 1000);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-};
-
 const togglePlay = () => {
-  isPlaying.value = !isPlaying.value;
+  isPaused.value = !isPaused.value;
   playerInstance.togglePlay();
-  if (isPlaying) {
-  }
 };
 
 const playNext = () => {
@@ -153,33 +138,15 @@ onMounted(async () => {
     if (playerInstance) {
       const state = await playerInstance.getCurrentState();
       if (state) {
+        currentTrack.value = state.track_window.current_track;
         position.value = state.position;
-        progress.value = (state.position / state.duration) * 100;
+        isPaused.value = state.paused;
       }
     }
   }, 1000);
-
-  Draggable.create("#no-knob", {
-    type: "x",
-    bounds: track.value,
-    onClick: function () {
-      console.log("knob clicked with gsap");
-    },
-    onDrag: function (event) {
-      //   dragValue.value = this.x;
-    },
-    onDragEnd: function (event) {
-      console.log("dragging stopped");
-      dragValue.value = this.x;
-      progress.value = (this.x / trackWidth) * 100;
-    },
-  });
 });
 
-onUnmounted(() => {
-  if (playerInstance) {
-    playerInstance.disconnect();
-  }
+onBeforeUnmount(() => {
   clearInterval(progressInterval);
 });
 </script>

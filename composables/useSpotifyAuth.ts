@@ -1,12 +1,11 @@
 import type { CookieRef } from "#app";
 import type { SpotifyUser, Token } from "~/types/assets";
 
-const scopes = `user-read-private user-read-email user-read-recently-played user-read-currently-playing playlist-read-private playlist-read-collaborative streaming user-modify-playback-state user-read-playback-state user-read-currently-playing user-top-read playlist-modify-private playlist-modify-public 
+const scopes = `user-read-private user-read-email user-read-recently-played user-read-playback-state user-read-currently-playing playlist-read-private playlist-read-collaborative streaming user-modify-playback-state user-read-playback-state user-read-currently-playing user-top-read playlist-modify-private playlist-modify-public 
 `;
 
 const scopesIMayNeed = `
 ugc-image-upload
-user-read-playback-state
 
 user-follow-read
 user-follow-modify

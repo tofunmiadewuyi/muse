@@ -11,7 +11,11 @@
         <p>Dashboard</p>
       </NuxtLink>
 
-      <NuxtLink class="page-tab" to="/playlists" activeClass="active-page">
+      <NuxtLink
+        class="page-tab"
+        to="/playlists"
+        :class="{ 'active-page': playlists }"
+      >
         <i class="ri-folder-music-fill text-[20px] leading-[20px]"></i>
         <p>Playlists</p>
       </NuxtLink>
@@ -35,11 +39,15 @@ const route = useRoute();
 const nowPlaying = computed(() => {
   return route.path.includes("/playing") ? true : false;
 });
+
+const playlists = computed(() => {
+  return route.path.includes("/playlists") ? true : false;
+});
 </script>
 
 <style scoped>
 .side-nav {
-  @apply fixed left-6 top-32  w-[240px];
+  @apply fixed left-6 top-32  w-[240px] hidden lg:block;
 }
 .page-tab {
   @apply p-2 rounded-[16px] hover:bg-black/90 hover:text-white flex gap-1 hover:px-4 hover:gap-2 items-center text-[16px] cursor-pointer;

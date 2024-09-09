@@ -1,16 +1,14 @@
 <template>
-  <div class="p-20 pl-80 flex flex-col gap-10 items-center">
-    <div
-      class="flex gap-5 justify-between items-center mt-8 w-full max-w-[840px]"
-    >
+  <div class="nav-page flex flex-col gap-6 lg:gap-10 items-center">
+    <div class="flex gap-5 justify-between items-center mt-20 w-full">
       <div class="heading-box"><h1>My Playlists</h1></div>
-      <div class="heading-box">
+      <div class="heading-box justify-end">
         <button @click="() => (isModalOpen = true)" class="btn">
           <p>Create Playlist</p>
           <Modal
             :isOpen="isModalOpen"
             @close="() => (isModalOpen = false)"
-            title="Test Modal"
+            title="Create Playlist"
           >
             <FormsCreatePlaylist />
           </Modal>
@@ -18,7 +16,7 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 max-w-[840px]">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
       <NuxtLink
         v-for="playlist in playlists"
         :key="playlist.id"
@@ -29,7 +27,7 @@
           :src="`${
             playlist.images ? playlist.images[0].url : '/images/default.svg'
           }`"
-          class="w-full h-full rounded-xl smooth group-hover:scale-110"
+          class="w-full h-full rounded-xl smooth group-hover:scale-[1.07] group-hover:rounded-3xl"
         />
         <div class="flex flex-col gap-1 items-center w-full">
           <p class="truncate w-full">{{ playlist.name }}</p>

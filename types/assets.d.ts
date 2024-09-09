@@ -47,6 +47,14 @@ export interface Artist {
   name: string;
   type: string;
   uri: string;
+  popularity: number;
+  images: [
+    {
+      height: number;
+      width: number;
+      url: string;
+    }
+  ];
 }
 
 export interface Album {
@@ -62,18 +70,21 @@ export interface Album {
     }
   ];
   name: string;
+  uri: string;
+  type: album;
 }
 
 export interface Track {
   album: Album;
   artists: Artist[];
   duration_ms: number;
-  explicit: boolean;
-  href: string;
   id: string;
   name: string;
-  popularity: string;
+  explicit: boolean;
+  href: string;
+  popularity: number;
   uri: string;
+  type: "track";
 }
 
 export interface Image {
@@ -106,6 +117,27 @@ export interface Playlist {
   primary_color: string;
   public: boolean;
   tracks: { href: string; total: number };
+  uri: string;
+  type: "playlist";
+}
+
+type StateTrack = Pick<
+  Track,
+  "album" | "artists" | "duration_ms" | "id" | "name" | "uri"
+>;
+export interface PlayerState {
+  context: {
+    uri: string;
+  };
+  duration: number;
+  position: number;
+  loading: boolean;
+  paused: boolean;
+  track_window: {
+    current_track: StateTrack;
+    next_tracks: StateTrack[];
+    previous_tracks: StateTrack[];
+  };
 }
 
 interface PlaybackState {
@@ -158,4 +190,59 @@ interface CurrentTrack {
     toggling_repeat_track: boolean;
     transferring_playback: booolean;
   };
+}
+
+export interface TrackList {
+  tracks: Track[];
+  type: "tracklist";
+  uri: string[];
+}
+
+const types = [
+  "album",
+  "artist",
+  "playlist",
+  "track",
+  "episode",
+  "audiobook",
+  "show",
+];
+
+export interface SearchQuery {
+  type: (typeof types)[number];
+  limit?: number = 5;
+}
+
+export interface SearchResults {
+  albums: {
+    next: string;
+    previous: string;
+    total: string;
+    items: Album[];
+  };
+  artists: {
+    next: string;
+    previous: string;
+    total: string;
+    items: Artist[];
+  };
+  tracks: {
+    next: string;
+    previous: string;
+    total: string;
+    items: Track[];
+  };
+  playlists: {
+    items: Playlist[];
+    next: string;
+    previous: string;
+    total: string;
+  };
+}
+
+interface Queue {
+  currently_playing: {
+    album: Album;
+  };
+  queue: Album[];
 }

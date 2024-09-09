@@ -2,6 +2,7 @@ import type { CookieRef } from "#app";
 import type { Token } from "~/types/assets";
 
 export const logOut = () => {
+  const router = useRouter();
   const userCookie = useCookie("user");
   const accessToken = useCookie("accessToken");
   const refreshToken = useCookie("refreshToken");
@@ -13,7 +14,7 @@ export const logOut = () => {
   refreshToken.value = null;
   expiresAt.value = null;
 
-  navigateTo("/");
+  router.push("/");
 };
 
 export const getFreshToken = async () => {

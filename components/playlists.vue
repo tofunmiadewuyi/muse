@@ -1,7 +1,7 @@
 <template>
   <NuxtLink class="card" to="/playlists">
     <div class="container">
-      <div class="icon-bounce">
+      <div class="icon-bounce text-[120px]">
         <i class="ri-play-list-fill"></i>
       </div>
 

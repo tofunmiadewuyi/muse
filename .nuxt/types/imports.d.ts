@@ -9,6 +9,8 @@ declare global {
   const clearNuxtData: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/asyncData')['clearNuxtData']
   const clearNuxtState: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/state')['clearNuxtState']
   const computed: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['computed']
+  const convertTimeToReadable: typeof import('../../utils/index')['convertTimeToReadable']
+  const copyCode: typeof import('../../utils/index')['copyCode']
   const createError: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/error')['createError']
   const customRef: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['customRef']
   const defineAppConfig: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/nuxt')['defineAppConfig']
@@ -314,6 +316,7 @@ declare global {
   const usePartition: typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['partition']
   const usePick: typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['pick']
   const usePickBy: typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['pickBy']
+  const usePlayer: typeof import('../../composables/usePlayer')['usePlayer']
   const usePreviewMode: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']
   const useProperty: typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['property']
   const usePropertyOf: typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['propertyOf']
@@ -496,6 +499,8 @@ declare module 'vue' {
     readonly clearNuxtData: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/asyncData')['clearNuxtData']>
     readonly clearNuxtState: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/state')['clearNuxtState']>
     readonly computed: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['computed']>
+    readonly convertTimeToReadable: UnwrapRef<typeof import('../../utils/index')['convertTimeToReadable']>
+    readonly copyCode: UnwrapRef<typeof import('../../utils/index')['copyCode']>
     readonly createError: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/error')['createError']>
     readonly customRef: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['customRef']>
     readonly defineAppConfig: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/nuxt')['defineAppConfig']>
@@ -801,6 +806,7 @@ declare module 'vue' {
     readonly usePartition: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['partition']>
     readonly usePick: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['pick']>
     readonly usePickBy: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['pickBy']>
+    readonly usePlayer: UnwrapRef<typeof import('../../composables/usePlayer')['usePlayer']>
     readonly usePreviewMode: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']>
     readonly useProperty: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['property']>
     readonly usePropertyOf: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['propertyOf']>

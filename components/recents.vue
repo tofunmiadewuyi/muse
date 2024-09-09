@@ -4,15 +4,8 @@
       <NuxtLink
         v-for="(recent, index) in data"
         class="album"
-        :style="{
-          left: `${(index + 1) * 9}%`,
-          top: `${index * 5}%`,
-          ':hover': {
-            top: `${index * 5 + -10}%`,
-          },
-        }"
         :key="recent.track.id"
-        :to="`/playing/${recent.track.id}`"
+        :to="{ path: `/playing/${recent.track.id}`, query: { type: 'track' } }"
       >
         <img
           class="w-full h-full"
@@ -38,6 +31,7 @@ defineProps<{ data?: RecentlyPlayed[] }>();
 onMounted(() => {
   gsap.to(".album", { y: 0, stagger: 0.2 });
 });
+
 </script>
 
 <style scoped lang="css">
@@ -71,12 +65,31 @@ onMounted(() => {
   background-color: black;
   flex-shrink: 0;
   position: absolute;
-  /* transition: all 300ms ease; */
   transition: all 600ms var(--back-out);
-  border-radius: calc(var(--container) / 20);
-  transform: rotate3d(0, 1, 0, 30deg);
+  border-radius: calc(var(--container) / 12);
+  /* transform: rotate3d(0, 1, 0, 30deg); */
   overflow: hidden;
-  box-shadow: 0px 2px 6px 0.5px rgba(0, 0, 0, 5%);
+  /* box-shadow: 0px 2px 6px 0.5px rgba(0, 0, 0, 5%); */
+  border: 6px solid var(--grey);
+}
+
+.album:nth-child(1) {
+  top: 12%;
+  left: 12%;
+  transform: rotate(-10deg);
+}
+.album:nth-child(2) {
+  top: 6%;
+  left: 28%;
+  transform: rotate(5deg);
+}
+.album:nth-child(3) {
+  top: 18%;
+  left: 45%;
+  transform: rotate(10deg);
+}
+.album:nth-child(4) {
+  top: 24%;
 }
 
 .album:hover {

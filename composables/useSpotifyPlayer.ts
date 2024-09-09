@@ -8,7 +8,6 @@ declare global {
     onSpotifyWebPlaybackSDKReady: () => void;
   }
 }
-
 interface SpotifyPlayerOptions {
   name: string;
   getOAuthToken: (callback: (token: string) => void) => void;
@@ -23,75 +22,14 @@ function useSpotifyPlayer() {
 
   const deviceReady = ref(false);
 
-  const currentTrack = ref();
+  const currentState = ref();
 
-  const transferPlayback = async (deviceId: string) => {
-    const { data, error } = await useFetchExtended("/v1/me/player", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        device_ids: [deviceId],
-      }),
-    });
+  const { transferPlayback } = usePlayer();
 
-    if (error.value) {
-      console.error("Could not transfer playback:", error.value);
-    }
-  };
-
-  const getPlaybackState = async () => {
-    const { data, error } = await useFetchExtended(`/v1/me/player`);
-
-    if (error.value) {
-      console.error("Could not get playback state:", error.value);
-    }
-    return data.value;
-  };
-
-  const queueTrack = async (trackUri: string, deviceId?: string) => {
-    const endpoint = "/v1/me/player/queue";
-    const { data, error } = await useFetchExtended(endpoint, {
-      method: "POST",
-      params: {
-        uri: trackUri,
-      },
-    });
-    if (error.value) {
-      console.error("Could not add track to queue", error.value);
-    }
-    return data.value;
-  };
-
-  const playTrack = async (
-    trackUris: string[],
-    contextUri?: string,
-    position?: number
-  ) => {
-    let reqBody = {
-      uris: trackUris,
-      ...(contextUri && { context_uri: contextUri }),
-      ...(position && { offset: { position } }),
-    };
-
-    const res = await useFetchExtended("/v1/me/player/play", {
-      method: "PUT",
-      params: {
-        device_id: deviceId.value,
-      },
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(reqBody),
-    });
-  };
-
-  onMounted(() => {
+  const initializePlayer = () => {
     const script = document.createElement("script");
     script.src = "https://sdk.scdn.co/spotify-player.js";
     script.async = true;
-
     document.body.appendChild(script);
 
     window.onSpotifyWebPlaybackSDKReady = () => {
@@ -105,8 +43,8 @@ function useSpotifyPlayer() {
 
       player.addListener("ready", async ({ device_id }: { device_id: any }) => {
         if (!deviceId.value || deviceId.value !== device_id) {
-          await transferPlayback(device_id);
           deviceId.value = device_id;
+          await transferPlayback(device_id);
         }
         deviceReady.value = true;
         console.log("Ready with Device ID", device_id);
@@ -138,23 +76,20 @@ function useSpotifyPlayer() {
           if (!state) {
             return;
           }
-
-          currentTrack.value = state;
+          currentState.value = state;
         }
       );
 
       player.connect();
       playerInstance.value = player;
     };
-  });
+  };
 
   return {
+    initializePlayer,
     playerInstance,
     deviceReady,
-    currentTrack,
-    queueTrack,
-    playTrack,
-    getPlaybackState,
+    currentState,
   };
 }
 

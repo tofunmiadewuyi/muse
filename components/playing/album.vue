@@ -16,7 +16,7 @@
         <i class="ri-album-fill text-[20px] leading-[20px]"></i>
         <p>Album</p>
       </div>
-      <p>Album name</p>
+      <p>{{ currentTrack.album.name }}</p>
     </div>
 
     <div class="expandable wrapper" :class="{ open: expanded }">
@@ -27,16 +27,16 @@
               <i class="ri-speak-fill text-[20px] leading-[20px]"></i>
               <p>Artist</p>
             </div>
-            <p>Artist name</p>
+            <p>{{ currentTrack.artists.map((a) => a.name).join(", ") }}</p>
           </div>
 
-          <div>
+          <!-- <div>
             <div class="flex gap-1 pb-1 items-center text-[var(--grey-dark)]">
               <i class="ri-information-2-fill text-[20px] leading-[20px]"></i>
               <p>Details</p>
             </div>
             <p>Artist</p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -45,6 +45,12 @@
 
 <script setup lang="ts">
 const expanded = ref(false);
+
+const { state } = defineProps<{ state: PlayerState }>();
+
+const currentTrack = ref(state.track_window.current_track);
+
+console.log("current track:", currentTrack.value);
 </script>
 
 <style scoped>

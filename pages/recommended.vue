@@ -1,40 +1,38 @@
 <template>
-  <div class="p-20 pl-80 flex flex-col gap-10 items-center">
-    <div
-      class="flex gap-5 justify-between items-center mt-8 w-full max-w-[840px]"
-    >
-      <div class="heading-box"><h1>My Playlists</h1></div>
-      <div class="heading-box">
-        <button @click="() => (isModalOpen = true)" class="btn">
-          <p>Create Playlist</p>
-          <Modal
-            :isOpen="isModalOpen"
-            @close="() => (isModalOpen = false)"
-            title="Test Modal"
-          >
-            <FormsCreatePlaylist />
-          </Modal>
-        </button>
+  <div class="nav-page flex flex-col gap-10 items-center">
+    <div class="flex gap-5 items-center mt-16 w-full">
+      <div class="flex flex-col gap-2">
+        <h1>Recommended Songs</h1>
+        <p class="text-black/70 text-[14px]">Based on your listening history</p>
+      </div>
+      <div class="">
+        <NuxtLink
+          class="text-[80px] leading[80px] icon-bounce"
+          :to="{
+            path: '/playing/list',
+            query: trackListQuery,
+          }"
+        >
+          <i class="ri-play-circle-fill"></i>
+        </NuxtLink>
       </div>
     </div>
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 max-w-[840px]">
+    <div v-if="recommended" class="grid grid-cols-2 lg:grid-cols-4 gap-5">
       <NuxtLink
-        v-for="playlist in playlists"
-        :key="playlist.id"
+        v-for="song in recommended.tracks"
+        :key="song.id"
         class="card group hover:scale-105 smooth"
-        :to="`/playlists/${playlist.id}`"
+        :to="{ path: `/playing/${song.id}`, query: { type: 'track' } }"
       >
         <img
-          :src="`${
-            playlist.images ? playlist.images[0].url : '/images/default.svg'
-          }`"
-          class="w-full h-full rounded-xl smooth group-hover:scale-110"
+          :src="`${song.album.images && song.album.images[0].url}`"
+          class="album-cover"
         />
         <div class="flex flex-col gap-1 items-center w-full">
-          <p class="truncate w-full">{{ playlist.name }}</p>
-          <p class="text-[var(--grey-dark)]">
-            {{ playlist.tracks.total }} songs
+          <p class="truncate w-full">{{ song.name }}</p>
+          <p class="label line-clamp-2">
+            {{ song.artists.map((a: any) => a.name).join(" • ") }}
           </p>
         </div>
       </NuxtLink>
@@ -43,19 +41,31 @@
 </template>
 
 <script setup lang="ts">
-import type { Playlist } from "~/types/assets";
+import type { Track } from "~/types/assets";
 
-const isModalOpen = ref();
+const { getTopTracks, getRecommendations } = useSpotify();
 
-const { getUserPlaylists } = useSpotify();
+const recommended = ref<{
+  seeds: {}[];
+  tracks: Track[];
+}>();
 
-const data = (await getUserPlaylists()) as { items: Playlist[] };
-const playlists = ref();
+const topTracks = await getTopTracks();
 
-playlists.value = data.items;
+recommended.value = (await getRecommendations(20, topTracks.items)) as {
+  seeds: {}[];
+  tracks: Track[];
+};
+
+const trackListQuery = computed(() => {
+  return {
+    type: "recommended",
+    ids: recommended.value?.tracks.map((t) => t.id),
+  };
+});
 
 definePageMeta({
-  layout: "loggedin",
+  layout: "navigation",
 });
 onMounted(() => {});
 </script>
@@ -70,6 +80,14 @@ onMounted(() => {});
   background-color: var(--grey);
   position: relative;
   animation: slideUp 150ms cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.album-cover {
+  @apply w-full h-full rounded-xl smooth group-hover:scale-110 group-hover:rounded-3xl;
+}
+
+.label {
+  @apply text-[var(--grey-dark)] text-[14px];
 }
 
 @keyframes slideUp {

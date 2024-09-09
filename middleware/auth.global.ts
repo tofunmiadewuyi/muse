@@ -1,3 +1,6 @@
+import type { CookieRef } from "#app";
+import type { Token } from "~/types/assets";
+
 export default defineNuxtRouteMiddleware(async (to) => {
   const accessToken = useCookie("accessToken");
   const expires = useCookie<number>("tokenExpire");
