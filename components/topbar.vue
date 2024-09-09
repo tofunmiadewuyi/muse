@@ -15,7 +15,7 @@
         ref="menu"
         class="menu flex flex-col absolute p-3- rounded-3xl min-w-[240px] text-black overflow-hidden"
       >
-        <div class="flex flex-col gap-2 p-3">
+        <div v-if="user" class="flex flex-col gap-2 p-3">
           <p class="font-semibold">{{ user.display_name }}</p>
           <p class="text-black/70 font-medium">{{ user?.email }}</p>
         </div>
