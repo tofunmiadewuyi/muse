@@ -43,15 +43,20 @@
 
 <script setup lang="ts">
 import type { Queue } from "~/types/assets";
-
-const expanded = ref(false);
+const { state } = defineProps<{ state: PlayerState }>();
 const { getQueue } = usePlayer();
+
+const currentTrack = ref(state.track_window.current_track);
+const expanded = ref(false);
+console.log("ct:", currentTrack.value);
 
 const queue = ref();
 
 queue.value = await getQueue();
 
-console.log("queue:", queue.value);
+watch(currentTrack, async (track) => {
+  queue.value = await getQueue();
+});
 </script>
 
 <style scoped>

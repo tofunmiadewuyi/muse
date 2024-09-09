@@ -49,8 +49,6 @@ const expanded = ref(false);
 const { state } = defineProps<{ state: PlayerState }>();
 
 const currentTrack = ref(state.track_window.current_track);
-
-console.log("current track:", currentTrack.value);
 </script>
 
 <style scoped>

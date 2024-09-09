@@ -1,28 +1,31 @@
 <template>
-  <div class="page flex justify-center items-center relative">
-    <Playing
-      v-if="currentState"
-      :deviceReady="deviceReady"
-      :playerInstance="playerInstance!"
-      :state="currentState"
-    />
-
-    <ShimmersPlaying v-else :deviceReady="false" />
-
+  <div class="page flex flex-col justify-center items-center relative pt-28">
     <button
       @click="() => handleCopy()"
-      class="btn sec absolute top-28 right-10"
+      class="btn sec md:absolute top-28 right-10"
     >
       <p v-if="!copying" class="copy-default">Share</p>
       <p v-else class="copy-active">Link Copied!</p>
     </button>
 
-    <div class="absolute bottom-10 right-10">
-      <PlayingAlbum v-if="currentState" :state="currentState" />
+    <div class="mt-5 mb-20">
+      <Playing
+        v-if="currentState"
+        :deviceReady="deviceReady"
+        :playerInstance="playerInstance!"
+        :state="currentState"
+      />
+
+      <ShimmersPlaying v-else :deviceReady="false" />
     </div>
 
-    <div class="absolute bottom-10 left-10">
-      <PlayingQueue v-if="currentState" />
+    <div
+      v-if="currentState"
+      class="md:absolute w-full flex flex-col items-center md:flex-row md:items-end justify-between gap-2 px-10 bottom-10"
+    >
+      <PlayingQueue :state="currentState" />
+
+      <PlayingAlbum :state="currentState" />
     </div>
   </div>
 </template>
