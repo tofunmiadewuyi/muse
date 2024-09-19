@@ -28,7 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import { logOut } from "~/composables/useAuth";
 import type { SpotifyUser } from "~/types/assets";
 
 const isMenuOpen = ref(false);

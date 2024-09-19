@@ -1,6 +1,7 @@
 import type { FetchError } from "ofetch";
 import { defu } from "defu";
 import type { UseFetchOptions, AsyncData } from "#app";
+import { useAuth } from "./useAuth";
 interface QueuedRequest<T> {
   url: string;
   options: any;
@@ -27,24 +28,13 @@ async function processQueue() {
   }
 }
 
-async function handle401Error(): Promise<void> {
-  const res = await getFreshToken();
-  if (res === "success") {
-    isRefreshing.value = false;
-    await processQueue();
-  } else {
-    throw new Error("Token refresh failed");
-  }
-}
-
-
-
-export const useFetchExtended = <T>(
+export const useFetchExtended = async <T>(
   url: string,
   options?: UseFetchOptions<T>
 ): Promise<UseFetchReturn<T>> => {
   const config = useRuntimeConfig();
   const accessToken = useCookie("accessToken");
+  const expires = useCookie<number>("tokenExpire");
 
   const defaults: UseFetchOptions<T> = {
     baseURL: config.public.baseURL,
@@ -67,6 +57,28 @@ export const useFetchExtended = <T>(
   };
 
   const reqOptions = defu(options, defaults);
+
+  const { getFreshToken } = useAuth();
+
+  async function handle401Error(): Promise<void> {
+    const res = await getFreshToken();
+    if (res === "success") {
+      isRefreshing.value = false;
+      await processQueue();
+    } else {
+      throw new Error("Token refresh failed");
+    }
+  }
+
+  const tokenExpired = (expiresAt: number): boolean => {
+    return Date.now() > expiresAt - 300000; // if it expires in the next 5mins
+  };
+
+  if (accessToken.value) {
+    if (tokenExpired(expires.value)) {
+      await getFreshToken();
+    }
+  }
 
   if (isRefreshing.value) {
     return new Promise((resolve, reject) => {

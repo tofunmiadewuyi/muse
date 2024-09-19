@@ -32,7 +32,6 @@ declare global {
   const getAppManifest: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']
   const getCurrentInstance: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['getCurrentInstance']
   const getCurrentScope: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['getCurrentScope']
-  const getFreshToken: typeof import('../../composables/useAuth')['getFreshToken']
   const getRouteRules: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/manifest')['getRouteRules']
   const h: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['h']
   const hasInjectionContext: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['hasInjectionContext']
@@ -349,7 +348,6 @@ declare global {
   const lodashZipObject: typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['zipObject']
   const lodashZipObjectDeep: typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['zipObjectDeep']
   const lodashZipWith: typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['zipWith']
-  const logOut: typeof import('../../composables/useAuth')['logOut']
   const markRaw: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['markRaw']
   const mergeModels: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['mergeModels']
   const navigateTo: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/router')['navigateTo']
@@ -404,6 +402,7 @@ declare global {
   const useAppConfig: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/config')['useAppConfig']
   const useAsyncData: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/asyncData')['useAsyncData']
   const useAttrs: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['useAttrs']
+  const useAuth: typeof import('../../composables/useAuth')['useAuth']
   const useCookie: typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/cookie')['useCookie']
   const useCssModule: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['useCssModule']
   const useCssVars: typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['useCssVars']
@@ -522,7 +521,6 @@ declare module 'vue' {
     readonly getAppManifest: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/manifest')['getAppManifest']>
     readonly getCurrentInstance: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['getCurrentScope']>
-    readonly getFreshToken: UnwrapRef<typeof import('../../composables/useAuth')['getFreshToken']>
     readonly getRouteRules: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/manifest')['getRouteRules']>
     readonly h: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['h']>
     readonly hasInjectionContext: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['hasInjectionContext']>
@@ -839,7 +837,6 @@ declare module 'vue' {
     readonly lodashZipObject: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['zipObject']>
     readonly lodashZipObjectDeep: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['zipObjectDeep']>
     readonly lodashZipWith: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt-lodash@2.5.3_magicast@0.3.5_rollup@4.21.2/node_modules/nuxt-lodash/dist/runtime/lodash')['zipWith']>
-    readonly logOut: UnwrapRef<typeof import('../../composables/useAuth')['logOut']>
     readonly markRaw: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['markRaw']>
     readonly mergeModels: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['mergeModels']>
     readonly navigateTo: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/router')['navigateTo']>
@@ -894,6 +891,7 @@ declare module 'vue' {
     readonly useAppConfig: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/config')['useAppConfig']>
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/asyncData')['useAsyncData']>
     readonly useAttrs: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['useAttrs']>
+    readonly useAuth: UnwrapRef<typeof import('../../composables/useAuth')['useAuth']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.13.1_@parcel+watcher@2.4.1_@types+node@22.5.2_ioredis@5.4.1_magicast@0.3.5_rollup@4.21_c5a23o2uglxixihmv33pyy7vza/node_modules/nuxt/dist/app/composables/cookie')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.4.38_typescript@5.4.3/node_modules/vue')['useCssVars']>

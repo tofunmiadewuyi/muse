@@ -1,18 +1,11 @@
 import type { CookieRef } from "#app";
-import type { Token } from "~/types/assets";
+import { useAuth } from "~/composables/useAuth";
 
 export default defineNuxtRouteMiddleware(async (to) => {
+  const { logOut } = useAuth();
   const accessToken = useCookie("accessToken");
-  const expires = useCookie<number>("tokenExpire");
-
-  const tokenExpired = (expiresAt: number): boolean => {
-    return Date.now() > expiresAt - 300000; // if it expires in the next 5mins
-  };
 
   if (accessToken.value) {
-    // if (tokenExpired(expires.value)) {
-    //   await getFreshToken();
-    // }
     if (to.path === "/") return navigateTo("/dashboard");
     return;
   } else {
