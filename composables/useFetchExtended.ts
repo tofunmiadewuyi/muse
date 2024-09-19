@@ -60,7 +60,7 @@ export const useFetchExtended = async <T>(
 
   const { getFreshToken } = useAuth();
 
-  async function handle401Error(): Promise<void> {
+  async function handle401Error() {
     const res = await getFreshToken();
     if (res === "success") {
       isRefreshing.value = false;

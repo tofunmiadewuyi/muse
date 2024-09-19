@@ -7,28 +7,21 @@ export const useAuth = () => {
   const userCookie = useCookie("user");
   const accessToken = useCookie("accessToken");
   const refreshToken = useCookie("refreshToken");
-  const expiresAt = useCookie("tokenExpire");
+  const expiresToken = useCookie<Token["expires_in"] | null>("tokenExpire");
 
   const logOut = () => {
     userCookie.value = null;
     accessToken.value = null;
     refreshToken.value = null;
-    expiresAt.value = null;
+    expiresToken.value = null;
 
     router.push("/");
   };
 
   const getFreshToken = async () => {
-    const accessToken: CookieRef<Token["access_token"]> =
-      useCookie("accessToken");
-    const refreshToken: CookieRef<Token["refresh_token"]> =
-      useCookie("refreshToken");
-    const expiresToken: CookieRef<Token["expires_in"]> =
-      useCookie("tokenExpire");
-
     const body = new URLSearchParams({
       grant_type: "refresh_token",
-      refresh_token: refreshToken.value,
+      refresh_token: refreshToken.value as Token["refresh_token"],
       client_id: config.public.clientId,
     });
 
@@ -41,10 +34,10 @@ export const useAuth = () => {
     });
 
     if (data) {
-      console.log("fresh token set");
       accessToken.value = data.access_token;
       refreshToken.value = data.refresh_token;
       expiresToken.value = Date.now() + data.expires_in * 1000;
+      console.log("fresh token set");
       return "success";
     }
   };
